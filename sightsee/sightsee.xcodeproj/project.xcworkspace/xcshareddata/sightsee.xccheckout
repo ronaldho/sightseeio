@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>09D3EB2F-3264-444D-B294-6E6D995EB79A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>sightsee</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FBBCD32A-3DB3-45B9-865B-FB310384DE0B</key>
+		<string>https://github.com/ronaldho/sightseeio</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>sightsee/sightsee.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FBBCD32A-3DB3-45B9-865B-FB310384DE0B</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ronaldho/sightseeio</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FBBCD32A-3DB3-45B9-865B-FB310384DE0B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FBBCD32A-3DB3-45B9-865B-FB310384DE0B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Git</string>
+		</dict>
+	</array>
+</dict>
+</plist>
