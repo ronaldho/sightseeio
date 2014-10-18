@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.params=x\ y
+comment0.target=TingleBomb(int,\ int)
+comment1.params=
+comment1.target=void\ move()
+comment2.params=character
+comment2.target=void\ move(Character)
+comment2.text=\n\ @param\ character\ \ refers\ to\ a\ flying\ character\ such\ as\ Kammy\ Koopa\ that\n\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ drops\ the\ bomb\ from\ the\ character's\ location\n
+comment3.params=
+comment3.target=java.awt.Rectangle\ getObjectRectangle()
+comment4.params=
+comment4.target=java.util.ArrayList\ getStates()
+comment5.params=
+comment5.target=int\ getStateValue()
+numComments=6

@@ -1,0 +1,25 @@
+#BlueJ class context
+comment0.params=x\ y\ direction
+comment0.target=Bullet(int,\ int,\ java.lang.String)
+comment1.params=dir
+comment1.target=void\ setDirection(java.lang.String)
+comment2.params=enterNull
+comment2.target=java.lang.String\ getDirection(java.lang.String)
+comment3.params=
+comment3.target=void\ move()
+comment3.text=\n\ Bullet\ object's\ version\ of\ move()\n
+comment4.params=f
+comment4.target=void\ setIsFired(boolean)
+comment4.text=\n\ sets\ the\ fired\ state\ of\ the\ bullet\n\ \n\ @param\ f\ \ sets\ isFired\ to\ this\n
+comment5.params=
+comment5.target=boolean\ getFiredState()
+comment5.text=\n\ @return\ a\ boolean\ representing\ the\ state\ of\ isFired\n
+comment6.params=
+comment6.target=java.util.ArrayList\ getStates()
+comment7.params=
+comment7.target=int\ getStateValue()
+comment8.params=
+comment8.target=java.awt.Rectangle\ getObjectRectangle()
+comment9.params=character
+comment9.target=java.awt.Rectangle\ getObjectRectangle(PlayableCharacter)
+numComments=10

@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=args
+comment0.target=void\ main(java.lang.String[])
+comment1.params=
+comment1.target=MainFrame()
+comment2.params=
+comment2.target=void\ run()
+comment3.params=
+comment3.target=java.lang.Thread\ getMusicThread()
+comment3.text=\n\ This\ setter\ and\ getter\ returns\ the\ Frame's\ music\ thread\ which\ controls\n\ when\ the\ background\ music\ should\ be\ played\n
+comment4.params=
+comment4.target=java.util.ArrayList\ getGameSounds()
+comment4.text=\n\ This\ returns\ the\ game's\ sound\ effects\n
+comment5.params=
+comment5.target=javax.swing.JFrame\ getFrame()
+comment5.text=\n\ This\ returns\ the\ game's\ frame\n
+numComments=6
