@@ -16,21 +16,28 @@ import org.json.JSONTokener;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.Context;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class HttpClientListActivity extends ListActivity {
+	
+	private String searchTerm;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		new HttpGetTask().execute();
+		new HttpGetTask(HttpClientListActivity.this).execute();
+		
 	}
 
 	private class HttpGetTask extends AsyncTask<Void, Void, List<String>> {
@@ -40,6 +47,13 @@ public class HttpClientListActivity extends ListActivity {
 
 		private static final String URL = "http://api.geonames.org/earthquakesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username="
 				+ USER_NAME;
+		
+		private Context mContext;
+		
+	    public HttpGetTask (Context context){
+	         
+	    	mContext = context;
+	    }
 
 		AndroidHttpClient mClient = AndroidHttpClient.newInstance("");
 
@@ -66,6 +80,7 @@ public class HttpClientListActivity extends ListActivity {
 					R.layout.list_item, result));
 			
 			final ListView lv = getListView();
+			setContentView(lv);
 			
 			lv.setOnItemClickListener(new OnItemClickListener() {
 				@Override
@@ -77,7 +92,24 @@ public class HttpClientListActivity extends ListActivity {
 				}
 			});
 			
-		}
+			lv.setOnTouchListener(new OnSwipeTouchListener(mContext) {
+			    public void onSwipeTop() {
+			        Toast.makeText(mContext, "top", Toast.LENGTH_SHORT).show();
+			    }
+			    public void onSwipeRight() {
+			        Toast.makeText(mContext, "right", Toast.LENGTH_SHORT).show();
+			    }
+			    public void onSwipeLeft() {
+			        Toast.makeText(mContext, "left", Toast.LENGTH_SHORT).show();
+			    }
+			    public void onSwipeBottom() {
+			        Toast.makeText(mContext, "bottom", Toast.LENGTH_SHORT).show();
+			    }
+			    public boolean onTouch(View v, MotionEvent event) {
+			    	return gestureDetector.onTouchEvent(event);
+			    }
+			});
+			
 	}
 
 	private class JSONResponseHandler implements ResponseHandler<List<String>> {
@@ -111,18 +143,25 @@ public class HttpClientListActivity extends ListActivity {
 
 					// Summarize earthquake data as a string and add it to
 					// result
-					result.add(MAGNITUDE_TAG + ":"
-							+ earthquake.get(MAGNITUDE_TAG) + ","
-							+ LATITUDE_TAG + ":"
-							+ earthquake.getString(LATITUDE_TAG) + ","
-							+ LONGITUDE_TAG + ":"
-							+ earthquake.get(LONGITUDE_TAG));
+					searchTerm = getIntent().getStringExtra("cityName");
+					Log.i("dfghjk", searchTerm);
+					
+					if(earthquake.get(MAGNITUDE_TAG).toString().contains(searchTerm)) {
+						
+						result.add(MAGNITUDE_TAG + ":"
+								+ earthquake.get(MAGNITUDE_TAG) + ","
+								+ LATITUDE_TAG + ":"
+								+ earthquake.getString(LATITUDE_TAG) + ","
+								+ LONGITUDE_TAG + ":"
+								+ earthquake.get(LONGITUDE_TAG));
+					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			return result;
 		}
+	}
 	}
 	
 	protected void generateDialog(String listItemString) {

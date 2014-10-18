@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
+	
+	private EditText mEditText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -15,12 +18,24 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		final Button loadButton = (Button) findViewById(R.id.button1);
+        mEditText = (EditText) findViewById(R.id.cityName);
+        
 		loadButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(MainActivity.this, HttpClientListActivity.class));
+				startSearch();
 			}
 		});
+	}
+	
+	protected void startSearch() {
+		
+		String input = mEditText.getText().toString();
+
+        Intent intent = new Intent(MainActivity.this, HttpClientListActivity.class);
+        intent.putExtra("cityName", input);
+		
+		startActivity(intent);
 	}
 }
