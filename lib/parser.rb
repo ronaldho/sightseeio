@@ -14,7 +14,7 @@ class Parser
   end
 
   private
-  def create_item(tm, loc)
+  def create_item(tm, loc, num)
   	if !tm.nil? and !loc.nil?
     	path = "/v2/search?term=#{tm.gsub ' ', '%20'}&location=#{loc.gsub ' ','%20'}&limit=20&sort=0"
 		#path = URI.encode(path)
@@ -32,11 +32,11 @@ class Parser
   public
   def generate_itinerary_json(loc)
     itinerary = Hash[:businesses => []]
-    itinerary[:businesses] << create_item('breakfast',loc)
-    itinerary[:businesses] << create_item('point of interest',loc)
-    itinerary[:businesses] << create_item('lunch', loc)
-    itinerary[:businesses] << create_item('point of interest',loc)
-    itinerary[:businesses] << create_item('dinner', loc)
+    itinerary[:businesses] << create_item('breakfast',loc,1)
+    itinerary[:businesses] << create_item('point of interest',loc,2)
+    itinerary[:businesses] << create_item('lunch', loc,3)
+    itinerary[:businesses] << create_item('point of interest',loc,4)
+    itinerary[:businesses] << create_item('dinner', loc,5)
     itinerary.to_json
   end
 end
