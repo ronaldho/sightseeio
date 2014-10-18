@@ -1,0 +1,46 @@
+// Place all the styles related to the StaticPages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$customGrey: rgba(96,96,96,.75);
+
+body
+{
+	background-image:image-url('main.jpg');
+}
+
+header
+{
+	background-color:$customGrey;
+	border-radius:0 10px 0 10px;
+	border:solid rgba(50, 50, 50, .25);
+	height:50px;
+	width:100%;
+}
+
+#container
+{
+	position:relative;
+	height:100%;
+	width:1000px;
+	margin: auto;
+}
+
+#content
+{
+	background-color:rgba(0,0,0,.50);
+	height:500px;
+	width:100%;
+	margin-top:30px;
+	margin-bottom:30px;
+	border-radius:10px 0 10px 0;
+}
+
+footer
+{
+	background-color:$customGrey;
+	border:solid rgba(50,50,50, .25);
+	border-radius:0 10px 0 10px;
+	height:50px;
+	width:100%;
+}

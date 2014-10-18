@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.params=m
+comment0.target=CharacterListener(Map)
+comment1.params=
+comment1.target=int\ getEnemyNumber()
+comment1.text=\n\ @return\ an\ int\ that\ will\ determine\ which\ enemy\ will\ be\ drawn\ to\n\ \ \ \ \ \ \ \ \ screen\ at\ the\ specified\ time\n
+comment2.params=e
+comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
+numComments=3

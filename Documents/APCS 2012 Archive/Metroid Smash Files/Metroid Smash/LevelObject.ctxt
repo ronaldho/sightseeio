@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=objectX\ objectY
+comment0.target=LevelObject(int,\ int)
+comment1.params=cjc
+comment1.target=void\ setCollisionJumpControl(int)
+comment1.text=\n\ First\ group\ controls\ which\ objects\ have\ been\ touch\ to\ see\n\ if\ gravity\ should\ take\ effect\n
+comment2.params=
+comment2.target=int\ getCollisionJumpControl()
+comment3.params=itso
+comment3.target=void\ setIsTouchingSurfaceObject(boolean)
+comment3.text=\n\ This\ group\ determines\ if\ the\ character\ is\ touching\ a\ platform\n\ object\n
+comment4.params=
+comment4.target=boolean\ getIsTouchingSurfaceObject()
+numComments=5

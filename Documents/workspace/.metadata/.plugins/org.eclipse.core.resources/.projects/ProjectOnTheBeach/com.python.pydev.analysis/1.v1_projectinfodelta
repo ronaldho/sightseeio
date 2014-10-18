@@ -1,0 +1,11 @@
+INSTUPInterpreter
+/Users/Matas/Documents/workspace/ProjectOnTheBeach/src/Interpreter.py
+INFOS:&&3|1|2|0&&3|3|2|0&&3|4|2|0&&3|5|2|0&&3|6|2|0&&3|7|2|0&&2|8|2|0
+INT=5
+compileFile=8
+ID=6
+SRES=4
+token_exprs=7
+activeEligible=3
+Interpreter=2
+HRES=1

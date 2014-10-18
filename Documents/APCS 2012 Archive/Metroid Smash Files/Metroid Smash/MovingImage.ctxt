@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.params=
+comment0.target=void\ move()
+comment0.text=\n\ Abstract\ method\ that\ requires\ all\ characters\ to\ have\ a\ unique\ movement\n
+comment1.params=d
+comment1.target=void\ setDirection(int)
+comment2.params=
+comment2.target=int\ getDirection()
+comment3.params=x
+comment3.target=void\ setChangeX(int)
+comment4.params=
+comment4.target=int\ getChangeX()
+comment5.params=y
+comment5.target=void\ setChangeY(int)
+comment6.params=
+comment6.target=int\ getChangeY()
+comment7.params=yt
+comment7.target=void\ setYTrigger(boolean)
+comment8.params=
+comment8.target=boolean\ getYTrigger()
+numComments=9

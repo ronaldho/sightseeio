@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.params=
+comment0.target=java.util.ArrayList\ getStates()
+comment0.text=\n\ @return\ an\ ArrayList\ of\ Image\ objects\n
+comment1.params=
+comment1.target=int\ getStateValue()
+comment1.text=\n\ @return\ an\ int\ that\ holds\ the\ size\ of\ the\ Image\ ArrayList\n
+comment2.params=
+comment2.target=java.awt.Rectangle\ getObjectRectangle()
+comment2.text=\n\ @return\ a\ Rectangle\ object\ that\ contains\ the\ bounds\ of\ the\ object\n\ \ \ \ \ \ \ \ \ implementing\ this\ method\n
+numComments=3
