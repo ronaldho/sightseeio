@@ -1,0 +1,509 @@
+ import javax.swing.*;
+ import java.awt.*;
+ import java.awt.event.*;
+ import java.util.ArrayList;
+ import java.util.Iterator;
+ import java.util.ConcurrentModificationException;
+
+ public class Map extends JPanel implements ActionListener, MapFrame
+   {
+   protected Samus samus; //creates an instance of samus
+   protected KammyKoopa kammy; //creates an instance of Kammy Koopa
+   private Image bg; //This image resembles the background image
+   private static int gravity = 1; //This resembles the gravity of all stages
+   private ImageIcon bgIcon;
+   private static int minimumY;
+   private Dimension dimension;
+   private static Rectangle mapRectangle;
+   private Font font;
+   private Font pauseFont;
+   private static boolean drawCharacter;
+   private ArrayList< Enemy > enemies;
+   private ArrayList< TingleBomb > tingleBombs;
+   private boolean gameOver;
+   private static int score;
+   private int spawnDirection;
+   private int bombTimer; //controls period between each bomb drop
+   private int difficultyTimer; //controls spawn time of enemies
+   private int characterNumber; //how many enemies are spawned at one time
+   
+   public int timeCounter;
+   private CharacterListener cl;
+   private KammyKoopaListener kkl;
+   private int lives;
+   private int spaceInterval; //the interval between life sprites drawn
+   
+   protected ArrayList< Bullet > bullets;
+   //private ArrayList< Paratroopa > paratroopas;
+   
+   //private Timer bulletBillTimer;
+   //private Timer paratroopaTimer;
+   //private Timer donkeyKongTimer;
+   
+   private Timer drawTimer;
+   private Timer kammyKoopaTimer;
+   
+   public Map()
+      {
+      font = new Font("Brush Script MT", Font.BOLD, 72); 
+      pauseFont = new Font( "Impact", Font.BOLD, 72 );
+      timeCounter = 0;
+      spaceInterval = 50;
+      lives = 3;
+      score = 0;
+      gameOver = false;
+      bombTimer = 889;
+      difficultyTimer = 10000;
+      
+      bullets = new ArrayList< Bullet >();
+      //paratroopas = new ArrayList< Paratroopa >();
+      
+      samus = new Samus( 55 );
+      kammy = new KammyKoopa( 55 );
+      this.addKeyListener( PlayableCharacter.getMovement() );
+      dimension = new Dimension( 889, 889 );
+      mapRectangle = new Rectangle( 0, 0, this.dimension.height, this.dimension.width );
+      enemies = new ArrayList< Enemy >();
+      tingleBombs = new ArrayList< TingleBomb >();
+      
+      cl = new CharacterListener( this );
+      kkl = new KammyKoopaListener();
+      drawCharacter = false;
+      drawTimer = new Timer( difficultyTimer, cl );
+      kammyKoopaTimer = new Timer( 20000, kkl );
+      
+      kammyKoopaTimer.start();
+      drawTimer.start();
+      this.setFocusable( true );
+      this.requestFocus();
+      
+      characterNumber = 1;
+      } //end Map()
+      
+   public Map getMap( )
+      {
+      return this;
+      } //end getMap()
+      
+   public void setMinimumY( int y ) //sets the y coordinates of the stage ground (which is the minimum Y point)
+      {
+      minimumY = y;
+      } //end setMinimumY()
+    
+   public static int getMinimumY()
+      {
+      return minimumY;
+      } //end getMinimumY()
+      
+   final public void setBackgroundImage( String classpath ) 
+      {
+      bgIcon = new ImageIcon( this.getClass().getResource( classpath ) );
+      bg = bgIcon.getImage();
+      } //end setBackground()
+      
+   final public Image getBackgroundImage()
+      {
+      return bg;
+      } //end getBackgroundImage()
+      
+   public static void setGravity( int g )
+      {
+      gravity = g;
+      } //end setGravity()
+      
+   public static int getGravity()
+      {  
+      return gravity;
+      } //end callStageGravity()
+      
+   public static void setDrawActivity( boolean draw ) //sets drawing enemy onto screen
+      {
+      drawCharacter = draw;
+      } //end setDrawActivity()
+      
+   public static boolean getDrawActivity()
+      {
+      return drawCharacter;
+      } //end getDrawActivity()
+      
+   public static int getScore()
+      {
+      return score;
+      } //end getScore()
+      
+   public void paintComponent( Graphics g )
+      {
+      Graphics2D g2d = ( Graphics2D ) g;
+      g2d.setFont( font );
+      g2d.setColor( Color.WHITE );
+      
+      g2d.drawImage( this.getBackgroundImage(), 0, 0, null );
+      g2d.draw( samus.getObjectRectangle() );
+      
+      if( kkl.getKoopaCall() == true )
+         {
+            
+         if( kammy.getX() > getWorldBounds().getMinX() && kammy.getX() < getWorldBounds().getMaxX() )
+            {
+            if( kammy.getDirection() == Character.facingLeft() )
+               {
+               g2d.drawImage( kammy.getStates().get( 1 ), kammy.getX(), kammy.getY(), null );
+               
+               if( kammy.getX() < bombTimer )
+                  {
+                  tingleBombs.add( new TingleBomb( kammy.getX(), kammy.getY() ) );
+                  bombTimer = kammy.getX() - 100;
+                  } //end if
+               
+               } //end if
+         
+            else
+               if( kammy.getDirection() == Character.facingRight() )
+                  {
+                  g2d.drawImage( kammy.getStates().get( 0 ), kammy.getX(), kammy.getY(), null );
+                  
+                  if( kammy.getX() > bombTimer )
+                     {
+                     tingleBombs.add( new TingleBomb( kammy.getX(), kammy.getY() ) );
+                     bombTimer = kammy.getX() + 100;
+                     } //end if
+                  } //end else if    
+               
+            } //end if
+         } //end if
+         
+      for( Iterator< TingleBomb > iterator = tingleBombs.iterator(); iterator.hasNext(); )
+         {
+         TingleBomb tb = iterator.next();
+         
+         if( tb.getObjectRectangle().intersects( StageOne.getGround().getObjectRectangle() ) )
+            {
+            g2d.drawImage( tb.getStates().get( 1 ), tb.getX(), tb.getY(), null );
+            iterator.remove();
+            } //end if
+            
+         else
+            if( tb.getObjectRectangle().intersects( samus.getObjectRectangle() ) )
+               {
+               lives--;
+               g2d.drawImage( tb.getStates().get( 1 ), tb.getX(), tb.getY(), null );
+               iterator.remove();
+               } //end else if
+         } //end for
+      
+      for( int index = 0; index < lives; index++ )
+         { 
+         g2d.drawImage( new ImageIcon( this.getClass().getResource( "LifeSprite.png" ) ).getImage(),
+                                       spaceInterval, 30, null );
+         spaceInterval += 50;                   
+         } //end for
+         
+      spaceInterval = 50;
+         
+      if( tingleBombs.size() > 0 )
+         {
+         for( TingleBomb tb : tingleBombs )
+            {
+            g2d.drawImage( tb.getStates().get( 0 ), tb.getX(), tb.getY(), null );
+            } //end for
+         } //end if
+      
+      g2d.drawString( Integer.toString( score ), 600, 80 );
+      
+      if( PlayableCharacter.getRunState() == false && gameOver == false )
+         {
+         g2d.setFont( pauseFont );
+         g2d.drawString( "Game is Paused", ( int ) this.getWorldBounds().getWidth()/4 - 10,
+                                          ( int ) this.getWorldBounds().getHeight()/2 );
+         } //end if
+         
+      else
+         if( PlayableCharacter.getRunState() == true && gameOver == true )
+            {
+            Board.getFrame()
+            } //end if
+         
+      if( bullets.size() > 0 )
+        {
+        for( Bullet bullet : bullets )
+           {
+           g2d.draw( bullet.getObjectRectangle( samus ) );   
+              
+           if( bullet.getDirection( null ).equals( "RIGHT" ) )
+              {
+              g2d.drawImage( bullet.getStates().get( 0 ), bullet.getX(), bullet.getY(), null );
+              } //end
+              
+           else
+              if( bullet.getDirection( null ).equals( "LEFT" ) )
+                 {
+                 g2d.drawImage( bullet.getStates().get( 1 ), bullet.getX(), bullet.getY(), null );
+                 } //end else if
+           } //end for
+        } //end if
+        
+      if( enemies.size() > 0 )
+         {
+         for( Enemy enemy : enemies )
+            {
+            g2d.draw( enemy.getObjectRectangle() );
+            
+            if( enemy.getDirection() == Character.facingRight() )
+               {
+               g2d.drawImage( enemy.getStates().get( 0 ), enemy.getX(), enemy.getY(), null );
+               } //end if
+               
+            else
+               if( enemy.getDirection() == Character.facingLeft() )
+                  {
+                  g2d.drawImage( enemy.getStates().get( 1 ), enemy.getX(), enemy.getY(), null );
+                  } //end else if
+            } //end for
+         } //end if
+        
+      if( getDrawActivity() == true )
+         {
+         for( int index = 0; index < characterNumber; index++ )
+            {
+            enemies.add( Enemy.getEnemy( CharacterListener.getEnemyNumber() ) );
+            } //end for 
+         setDrawActivity( false );
+         } //end if
+            
+      if( samus.lastFacing() == samus.lastFacedLeft() && Character.hasJumped() == true && samus.getHasShot() == true )
+         {
+         g2d.drawImage( samus.getStates().get( 5 ), samus.getX() + 3, samus.getY(), null );
+         } //end if
+       
+      else     
+         if( samus.lastFacing() == samus.lastFacedRight() && Character.hasJumped() == true && samus.getHasShot() == true )
+            {
+            g2d.drawImage( samus.getStates().get( 4 ), samus.getX(), samus.getY(), null );
+            } //end if
+        
+      else      
+         if( samus.lastFacing() == samus.lastFacedLeft() && Character.hasJumped() == true )
+            {
+            g2d.drawImage( samus.getStates().get( 3 ), samus.getX(), samus.getY(), null );    
+            } //end if   
+           
+      else      
+         if( samus.lastFacing() == samus.lastFacedRight() && Character.hasJumped() == true )
+            {
+            g2d.drawImage( samus.getStates().get( 2 ), samus.getX(), samus.getY(), null );
+            } //end if
+            
+      if( samus.getDirection() == Character.facingRight() && Character.hasJumped() == false )
+         {
+         g2d.drawImage( samus.getStates().get( 0 ), samus.getX(), samus.getY(), null );
+         } //end if
+            
+      if( samus.getDirection() == Character.facingLeft() && Character.hasJumped() == false )
+         {
+         g2d.drawImage( samus.getStates().get( 1 ), samus.getX(), samus.getY(), null );
+         } //end if
+         
+      if( samus.getDirection() == Character.facingDefault() && Character.hasJumped() == false )
+         {
+         if( samus.lastFacing() == samus.lastFacedRight() )
+            {
+            g2d.drawImage( samus.getNormalPosition(), samus.getX(), samus.getY(), null );
+            } //end nested if
+               
+         if( samus.lastFacing() == samus.lastFacedLeft() )
+            {
+            g2d.drawImage( samus.getNormalPositionLeft(), samus.getX(), samus.getY(), null );
+            } //end if
+         } //end nested if
+         
+      if( Bullet.getFiredState() == true )
+           {
+           if( samus.lastFacing() == samus.lastFacedRight() )
+              {
+              bullets.add( new Bullet( ( int ) ( ( samus.getObjectRectangle().getMinX() + samus.getObjectRectangle().getMaxX() )/2 ),
+                                     ( int ) samus.getObjectRectangle().getMaxY() - samus.getGunHeight(), "RIGHT" ) );        
+              } //end if
+              
+           else
+              if( samus.lastFacing() == samus.lastFacedLeft() )
+                 {
+                 bullets.add( new Bullet( ( int ) ( ( samus.getObjectRectangle().getMinX() + samus.getObjectRectangle().getMaxX() )/2 ),
+                                     ( int ) samus.getObjectRectangle().getMaxY() - samus.getGunHeight(), "LEFT" ) );  
+                 } //end else if
+                 
+           PlayableCharacter.keys()[ 3 ] = false; /*# change number! */
+           Bullet.setIsFired( false ); 
+           } //end if
+           
+      try
+         {
+         for( Iterator< Bullet > iterator = bullets.iterator(); iterator.hasNext(); ) /*using an iterator here prevents a concurrentmodificationexception. 
+                                                                                     Basically just foreach loop code in a more complex manner*/
+            {
+            Bullet bullet = iterator.next();   
+            if( bullet.getX() > getWorldBounds().getMaxX() - 30 )
+               {
+               g2d.drawImage( bullet.getStates().get( 2 ), (int) getWorldBounds().getMaxX() - 17, bullet.getY(), null );
+               iterator.remove();
+               } //end if
+            
+            else
+               if( bullet.getX() < getWorldBounds().getMinX() )
+                  {
+                  g2d.drawImage( bullet.getStates().get( 2 ), (int) getWorldBounds().getMinX(), bullet.getY(), null );
+                  iterator.remove();   
+                  } //end if
+            } //end for
+         } //end try
+         
+      catch( ConcurrentModificationException e )
+         {
+         System.err.print( e );
+         } //end catch
+         
+      try
+         {
+         for( Iterator< Bullet > bulletIterator = bullets.iterator(); bulletIterator.hasNext(); )
+            {
+            Bullet bullet = bulletIterator.next();
+            
+            for( Iterator< Enemy > enemyIterator = enemies.iterator(); enemyIterator.hasNext(); )
+               {
+               Enemy enemy = enemyIterator.next();
+               
+               if( enemy.enemyCollision( bullet, samus ) == true )
+                  {
+                  g2d.drawImage( bullet.getStates().get( 2 ), enemy.getX(), enemy.getY(), null );
+                  g2d.drawImage( enemy.getStates().get( 2 ),  ( int ) enemy.getObjectRectangle().getX(), ( int ) enemy.getObjectRectangle().getY(), null );
+                  
+                  score += 100;
+                  
+                  bulletIterator.remove();
+                  enemyIterator.remove();
+                  } //end if
+               } //end for
+            } //end for
+         } //end try
+         
+      catch( ConcurrentModificationException e )
+         {
+         System.err.print( e );
+         } //end catch
+         
+      catch( IllegalStateException ex )
+         {
+         //ignore the exception
+         } //end catch
+         
+      try
+         {
+         for( Iterator< Enemy > enemyIterator = enemies.iterator(); enemyIterator.hasNext(); )
+            {
+            Enemy enemy = enemyIterator.next();  
+            
+            if( enemy.enemyCollision( samus ) == true )
+               {
+               lives--;
+               
+               if( samus.getX() > enemy.getX() )
+                  {
+                  samus.setX( ( int ) enemy.getObjectRectangle().getMaxX() + 30 );
+                  } //end if
+                  
+               else
+                  if( samus.getX() < enemy.getX() )
+                     {
+                     samus.setX( ( int ) enemy.getObjectRectangle().getMinX() - 30 );
+                     } //end else if
+               
+               Enemy.setCollision( false );
+               } //end if
+            } //end for
+         } //end try
+         
+      catch( ConcurrentModificationException e )
+         {
+         System.err.print( e );
+         } //end catch
+      } //end paintComponent()
+   
+   public static Rectangle getWorldBounds()
+      {
+      return mapRectangle;
+      } //end getWorldBounds()
+     
+   public void actionPerformed( ActionEvent e )
+      {
+      System.out.println( "Kammy X: " + kammy.getX() + "\n" +
+                          "BombTimer X: " + bombTimer + "\n" +
+                          "TingleBombs: " + tingleBombs.size() + "\n\n\n\n" );
+         
+      if( lives == 0 )
+         {
+         samus.setCharacterState( false );
+         
+         if( samus.getObjectRectangle().getY() > getWorldBounds().getMinY() )
+            {
+            gameOver = true;
+            } //end if
+         } //end if
+         
+      if( PlayableCharacter.getRunState() == true )
+         {
+         this.repaint(); 
+         
+         if( score % 500 == 0 && score != 0 )
+            {
+            characterNumber++;
+            score += 100;
+            difficultyTimer -= 500;
+            drawTimer.stop();
+            drawTimer = new Timer( difficultyTimer, cl );
+            drawTimer.start();
+            } //end if
+         
+         for( Enemy enemy: enemies )
+            {
+            enemy.move();
+            } //end for
+
+         if( bullets.size() > 0 )
+            {
+            for( Bullet bullet : bullets )
+               {
+               bullet.move();
+               } //end for
+            } //end if
+         
+         samus.move();
+         
+         if( kkl.getKoopaCall() == true )
+            {
+            if( kammy.getX() > 1400 )
+               {
+               kkl.setKoopaCall( false );
+               kammy.setX( KammyKoopa.getInitialXPosition() ); 
+               kammy.setY( KammyKoopa.getInitialYPosition() );
+               kammy.setDirection( Character.facingLeft() );
+               } //end if
+               
+            else
+               {
+               kammy.move();
+               }
+            } //end if
+            
+         if( tingleBombs.size() > 0 )
+            {
+            for( TingleBomb tb : tingleBombs )
+               {
+               tb.move(); 
+               } //end for
+            } //end if
+      } //end if
+         
+      PlayableCharacter.checkPause();
+      //paratroopa.move();
+      //dk.move();
+      } //end actionPerformed()
+   } //end Map
