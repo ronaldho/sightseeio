@@ -1,6 +1,7 @@
 package io.android.sightsee;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.json.JSONTokener;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,7 +28,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 public class HttpClientListActivity extends ListActivity {
@@ -40,13 +44,10 @@ public class HttpClientListActivity extends ListActivity {
 		
 	}
 
-	private class HttpGetTask extends AsyncTask<Void, Void, List<String>> {
+	private class HttpGetTask extends AsyncTask<Void, Void, PlaceToGo> {
 
 		// Get your own user name at http://www.geonames.org/login
-		private static final String USER_NAME = "aporter";
-
-		private static final String URL = "http://api.geonames.org/earthquakesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&username="
-				+ USER_NAME;
+		private static final String BASE_URL = "http://sitecio.herokuapp.com/requests/requests.json?loc=";
 		
 		private Context mContext;
 		
@@ -58,8 +59,11 @@ public class HttpClientListActivity extends ListActivity {
 		AndroidHttpClient mClient = AndroidHttpClient.newInstance("");
 
 		@Override
-		protected List<String> doInBackground(Void... params) {
-			HttpGet request = new HttpGet(URL);
+		protected PlaceToGo doInBackground(Void... params) {
+			Intent intent = getIntent();
+			String cityName = intent.getStringExtra("cityName");
+			
+			HttpGet request = new HttpGet(BASE_URL+cityName);
 			JSONResponseHandler responseHandler = new JSONResponseHandler();
 			try {
 				return mClient.execute(request, responseHandler);
@@ -70,17 +74,15 @@ public class HttpClientListActivity extends ListActivity {
 			}
 			return null;
 		}
-
-		@Override
-		protected void onPostExecute(List<String> result) {
+		
+		protected void onPostExecute(final PlaceToGo result) {
 			if (null != mClient)
 				mClient.close();
 			setListAdapter(new ArrayAdapter<String>(
 					HttpClientListActivity.this,
-					R.layout.list_item, result));
+					R.layout.list_item, result.placeNames));
 			
 			final ListView lv = getListView();
-			setContentView(lv);
 			
 			lv.setOnItemClickListener(new OnItemClickListener() {
 				@Override
@@ -88,95 +90,81 @@ public class HttpClientListActivity extends ListActivity {
 	                    long id) {
 					// TODO Auto-generated method stub
 					String listItemString = lv.getItemAtPosition(position).toString();
-					generateDialog(listItemString);
+					generateDialog(listItemString, result);
 				}
 			});
 			
-			lv.setOnTouchListener(new OnSwipeTouchListener(mContext) {
-			    public void onSwipeTop() {
-			        Toast.makeText(mContext, "top", Toast.LENGTH_SHORT).show();
-			    }
-			    public void onSwipeRight() {
-			        Toast.makeText(mContext, "right", Toast.LENGTH_SHORT).show();
-			    }
-			    public void onSwipeLeft() {
-			        Toast.makeText(mContext, "left", Toast.LENGTH_SHORT).show();
-			    }
-			    public void onSwipeBottom() {
-			        Toast.makeText(mContext, "bottom", Toast.LENGTH_SHORT).show();
-			    }
-			    public boolean onTouch(View v, MotionEvent event) {
-			    	return gestureDetector.onTouchEvent(event);
-			    }
-			});
-			
 	}
+		
+		private class JSONResponseHandler implements ResponseHandler<PlaceToGo> {
 
-	private class JSONResponseHandler implements ResponseHandler<List<String>> {
+			private static final String BUSINESSES_TAG = "businesses";
+			private static final String NAME_TAG = "name";
+			private static final String RATING_TAG = "rating";
+			private static final String LOCATION_TAG = "location";
 
-		private static final String LONGITUDE_TAG = "lng";
-		private static final String LATITUDE_TAG = "lat";
-		private static final String MAGNITUDE_TAG = "magnitude";
-		private static final String EARTHQUAKE_TAG = "earthquakes";
+			@Override
+			public PlaceToGo handleResponse(HttpResponse response)
+					throws ClientProtocolException, IOException {
+				PlaceToGo result = new PlaceToGo();
+				String JSONResponse = new BasicResponseHandler()
+						.handleResponse(response);
+				try {
 
-		@Override
-		public List<String> handleResponse(HttpResponse response)
-				throws ClientProtocolException, IOException {
-			List<String> result = new ArrayList<String>();
-			String JSONResponse = new BasicResponseHandler()
-					.handleResponse(response);
-			try {
+					// Get top-level JSON Object - a Mapn
+					JSONObject responseObject = (JSONObject) new JSONTokener(JSONResponse).nextValue();
 
-				// Get top-level JSON Object - a Map
-				JSONObject responseObject = (JSONObject) new JSONTokener(
-						JSONResponse).nextValue();
+					// Extract value of "earthquakes" key -- a List
+					JSONArray businesses = responseObject
+							.getJSONArray(BUSINESSES_TAG);
 
-				// Extract value of "earthquakes" key -- a List
-				JSONArray earthquakes = responseObject
-						.getJSONArray(EARTHQUAKE_TAG);
+					// Iterate over earthquakes list
+					for (int idx = 0; idx < businesses.length(); idx++) {
 
-				// Iterate over earthquakes list
-				for (int idx = 0; idx < earthquakes.length(); idx++) {
+						// Get single earthquake data - a Map
+						JSONObject business = (JSONObject) businesses.get(idx);
 
-					// Get single earthquake data - a Map
-					JSONObject earthquake = (JSONObject) earthquakes.get(idx);
+						// Summarize business data as a string and add it to
+						// result
 
-					// Summarize earthquake data as a string and add it to
-					// result
-					searchTerm = getIntent().getStringExtra("cityName");
-					Log.i("dfghjk", searchTerm);
-					
-					if(earthquake.get(MAGNITUDE_TAG).toString().contains(searchTerm)) {
+						String locationData = "";
+
+						for (int i=0; i < business.getJSONArray(LOCATION_TAG).length(); i++) {
+							locationData += (" "+business.getJSONArray(LOCATION_TAG).getString(i));
+						}
+												
+						Double rating = (Double) business.get("rating");
 						
-						result.add(MAGNITUDE_TAG + ":"
-								+ earthquake.get(MAGNITUDE_TAG) + ","
-								+ LATITUDE_TAG + ":"
-								+ earthquake.getString(LATITUDE_TAG) + ","
-								+ LONGITUDE_TAG + ":"
-								+ earthquake.get(LONGITUDE_TAG));
+						result.addPlaceName((String) business.get("name"));
+						result.addPlaceDetails((String) business.get("name"), rating.toString()+", "+locationData);
 					}
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
-			} catch (JSONException e) {
-				e.printStackTrace();
+				return result;
 			}
-			return result;
 		}
-	}
 	}
 	
-	protected void generateDialog(String listItemString) {
+	protected void generateDialog(String listItemString, PlaceToGo result) {
 		
-		String[] array = listItemString.split(",");
+		String bodyString = (String) result.placeDetails.get(listItemString);
+		String[] bodyStringArray = bodyString.split(",");
 		
-		String bodyString = null;
-		
-		for(String str : array) {
-			bodyString = bodyString + (str + "\n");
-		}
+		RatingBar rating = new RatingBar(HttpClientListActivity.this, null, android.R.attr.ratingBarStyle);
+		rating.setStepSize((float) 0.5);
+		rating.setNumStars(5);
+		rating.setRating(getRating(bodyStringArray[0]));		
 		
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle(array[0]);
-        alertDialog.setMessage(bodyString);
+        alertDialog.setView(rating, 100, 0, 100, 0);
+        alertDialog.setTitle(listItemString);
+        alertDialog.setMessage(bodyStringArray[1]+bodyStringArray[2]);        
         alertDialog.show();
+	}
+	
+	protected float getRating(String stars) {
+		float fillStars = Float.parseFloat(stars);
+		return fillStars;
 	}
 }

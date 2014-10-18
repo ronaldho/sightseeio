@@ -7,12 +7,12 @@ import java.util.Map;
 
 public class PlaceToGo {
 	
-	private List placeNames;
-	private Map placeDetails;
+	public List<String> placeNames = new ArrayList<String>();
+	public Map<String, String> placeDetails = new HashMap<String, String>();
+	
 	
 	public PlaceToGo() {
-		placeNames = new ArrayList<String>();
-		placeDetails = new HashMap();
+
 	}
 	
 	public void addPlaceName(String place) {
@@ -22,14 +22,15 @@ public class PlaceToGo {
 	public void addPlaceDetails(String place, String details) {
 		placeDetails.put(place, details);
 	}
+	/*
 	
-	public Map getPlaceDetails() {
+	public Map<String, String> getPlaceDetails() {
 		return placeDetails;
 	}
 	
-	public List placeNames() {
+	public List<String> getPlaceNames() {
 		return placeNames;
-	}
+	}*/
 
 
 }
