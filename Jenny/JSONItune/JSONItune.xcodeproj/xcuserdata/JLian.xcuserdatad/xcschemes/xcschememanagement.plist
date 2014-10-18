@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>JSONLabel.xcscheme</key>
+		<key>JSONItune.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>981C7B9A19F2A0750016678E</key>
+		<key>981C7BDE19F2B4450016678E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>981C7BBE19F2A0760016678E</key>
+		<key>981C7C0219F2B4450016678E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

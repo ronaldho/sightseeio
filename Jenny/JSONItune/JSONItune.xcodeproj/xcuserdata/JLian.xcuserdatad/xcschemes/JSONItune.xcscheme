@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "981C7B9A19F2A0750016678E"
-               BuildableName = "JSONLabel.app"
-               BlueprintName = "JSONLabel"
-               ReferencedContainer = "container:JSONLabel.xcodeproj">
+               BlueprintIdentifier = "981C7BDE19F2B4450016678E"
+               BuildableName = "JSONItune.app"
+               BlueprintName = "JSONItune"
+               ReferencedContainer = "container:JSONItune.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,20 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "981C7BBE19F2A0760016678E"
-               BuildableName = "JSONLabelTests.xctest"
-               BlueprintName = "JSONLabelTests"
-               ReferencedContainer = "container:JSONLabel.xcodeproj">
+               BlueprintIdentifier = "981C7C0219F2B4450016678E"
+               BuildableName = "JSONItuneTests.xctest"
+               BlueprintName = "JSONItuneTests"
+               ReferencedContainer = "container:JSONItune.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "981C7B9A19F2A0750016678E"
-            BuildableName = "JSONLabel.app"
-            BlueprintName = "JSONLabel"
-            ReferencedContainer = "container:JSONLabel.xcodeproj">
+            BlueprintIdentifier = "981C7BDE19F2B4450016678E"
+            BuildableName = "JSONItune.app"
+            BlueprintName = "JSONItune"
+            ReferencedContainer = "container:JSONItune.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -61,10 +61,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "981C7B9A19F2A0750016678E"
-            BuildableName = "JSONLabel.app"
-            BlueprintName = "JSONLabel"
-            ReferencedContainer = "container:JSONLabel.xcodeproj">
+            BlueprintIdentifier = "981C7BDE19F2B4450016678E"
+            BuildableName = "JSONItune.app"
+            BlueprintName = "JSONItune"
+            ReferencedContainer = "container:JSONItune.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -79,10 +79,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "981C7B9A19F2A0750016678E"
-            BuildableName = "JSONLabel.app"
-            BlueprintName = "JSONLabel"
-            ReferencedContainer = "container:JSONLabel.xcodeproj">
+            BlueprintIdentifier = "981C7BDE19F2B4450016678E"
+            BuildableName = "JSONItune.app"
+            BlueprintName = "JSONItune"
+            ReferencedContainer = "container:JSONItune.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
