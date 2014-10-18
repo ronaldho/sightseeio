@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E4A425C219F25D6E00B731C9 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A425C119F25D6E00B731C9 /* DismissSegue.m */; };
 		E4CA4BC919F2396800ABFD40 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA4BC819F2396800ABFD40 /* main.m */; };
 		E4CA4BCC19F2396800ABFD40 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA4BCB19F2396800ABFD40 /* AppDelegate.m */; };
 		E4CA4BCF19F2396800ABFD40 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA4BCE19F2396800ABFD40 /* ViewController.m */; };
@@ -14,6 +15,7 @@
 		E4CA4BD419F2396800ABFD40 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4CA4BD319F2396800ABFD40 /* Images.xcassets */; };
 		E4CA4BD719F2396800ABFD40 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4CA4BD519F2396800ABFD40 /* LaunchScreen.xib */; };
 		E4CA4BE319F2396900ABFD40 /* sightseeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA4BE219F2396900ABFD40 /* sightseeTests.m */; };
+		E4CA4BEE19F23B9800ABFD40 /* bg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E4CA4BED19F23B9800ABFD40 /* bg.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E4A425C019F25D6E00B731C9 /* DismissSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissSegue.h; sourceTree = "<group>"; };
+		E4A425C119F25D6E00B731C9 /* DismissSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissSegue.m; sourceTree = "<group>"; };
 		E4CA4BC319F2396800ABFD40 /* sightsee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sightsee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4CA4BC719F2396800ABFD40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4CA4BC819F2396800ABFD40 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,6 +44,7 @@
 		E4CA4BDC19F2396800ABFD40 /* sightseeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sightseeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4CA4BE119F2396900ABFD40 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4CA4BE219F2396900ABFD40 /* sightseeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = sightseeTests.m; sourceTree = "<group>"; };
+		E4CA4BED19F23B9800ABFD40 /* bg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,14 +86,16 @@
 		E4CA4BC519F2396800ABFD40 /* sightsee */ = {
 			isa = PBXGroup;
 			children = (
+				E4CA4BC619F2396800ABFD40 /* Supporting Files */,
 				E4CA4BCA19F2396800ABFD40 /* AppDelegate.h */,
 				E4CA4BCB19F2396800ABFD40 /* AppDelegate.m */,
 				E4CA4BCD19F2396800ABFD40 /* ViewController.h */,
 				E4CA4BCE19F2396800ABFD40 /* ViewController.m */,
 				E4CA4BD019F2396800ABFD40 /* Main.storyboard */,
+				E4A425C019F25D6E00B731C9 /* DismissSegue.h */,
+				E4A425C119F25D6E00B731C9 /* DismissSegue.m */,
 				E4CA4BD319F2396800ABFD40 /* Images.xcassets */,
 				E4CA4BD519F2396800ABFD40 /* LaunchScreen.xib */,
-				E4CA4BC619F2396800ABFD40 /* Supporting Files */,
 			);
 			path = sightsee;
 			sourceTree = "<group>";
@@ -96,6 +103,7 @@
 		E4CA4BC619F2396800ABFD40 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E4CA4BEC19F23B8A00ABFD40 /* img */,
 				E4CA4BC719F2396800ABFD40 /* Info.plist */,
 				E4CA4BC819F2396800ABFD40 /* main.m */,
 			);
@@ -117,6 +125,14 @@
 				E4CA4BE119F2396900ABFD40 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E4CA4BEC19F23B8A00ABFD40 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				E4CA4BED19F23B9800ABFD40 /* bg.jpeg */,
+			);
+			name = img;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +215,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4CA4BEE19F23B9800ABFD40 /* bg.jpeg in Resources */,
 				E4CA4BD219F2396800ABFD40 /* Main.storyboard in Resources */,
 				E4CA4BD719F2396800ABFD40 /* LaunchScreen.xib in Resources */,
 				E4CA4BD419F2396800ABFD40 /* Images.xcassets in Resources */,
@@ -220,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4CA4BCF19F2396800ABFD40 /* ViewController.m in Sources */,
+				E4A425C219F25D6E00B731C9 /* DismissSegue.m in Sources */,
 				E4CA4BCC19F2396800ABFD40 /* AppDelegate.m in Sources */,
 				E4CA4BC919F2396800ABFD40 /* main.m in Sources */,
 			);
@@ -412,6 +430,7 @@
 				E4CA4BE819F2396900ABFD40 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E4CA4BE919F2396900ABFD40 /* Build configuration list for PBXNativeTarget "sightseeTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +439,7 @@
 				E4CA4BEB19F2396900ABFD40 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

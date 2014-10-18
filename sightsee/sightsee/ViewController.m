@@ -1,27 +1,1 @@
-//
-//  ViewController.m
-//  sightsee
-//
-//  Created by Ronald Ho on 2014-10-17.
-//  Copyright (c) 2014 Awesome Itinerary. All rights reserved.
-//
-
-#import "ViewController.h"
-
-@interface ViewController ()
-
-@end
-
-@implementation ViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-@end
+////  ViewController.m//  sightsee////  Created by Ronald Ho on 2014-10-17.//  Copyright (c) 2014 Awesome Itinerary. All rights reserved.//#import "ViewController.h"#import "AppDelegate.h"@interface ViewController ()@property (nonatomic, strong) NSDictionary *jsonDictionary;@end@implementation ViewController- (void)viewDidLoad {    [super viewDidLoad];    // Do any additional setup after loading the view, typically from a nib.    }- (void)didReceiveMemoryWarning {    [super didReceiveMemoryWarning];    // Dispose of any resources that can be recreated.}-(IBAction)lets_go:(id)sender{    [self getLeJSON];}-(IBAction)cancel_button_touch:(id)sender {    [self dismissViewControllerAnimated:YES completion:nil];}-(void)getLeJSON(String city){    // Prepare the URL that we'll get the country info data from.    NSString *URLString = [NSString stringWithFormat:@"https://dl.dropboxusercontent.com/u/3137747/mock.json"];    NSURL *url = [NSURL URLWithString:URLString];        [AppDelegate downloadDataFromURL:url withCompletionHandler:^(NSData *data) {        // Check if any data returned.        if (data != nil) {            // Convert the returned data into a dictionary.            NSError *error;            NSMutableDictionary *returnedDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];                        if (error != nil) {                NSLog(@"%@", [error localizedDescription]);            }            else{                self.jsonDictionary = [[returnedDict objectForKey:@"businesses"] objectAtIndex:0];                NSLog(@"%@", self.jsonDictionary); /*                // Set the country name to the respective label.                self.lblCountry.text = [NSString stringWithFormat:@"%@ (%@)", [self.countryDetailsDictionary objectForKey:@"countryName"], [self.countryDetailsDictionary objectForKey:@"countryCode"]];                                // Reload the table view.                [self.tblCountryDetails reloadData];                                // Show the table view.                self.tblCountryDetails.hidden = NO;    */            }        }    }];}@end
