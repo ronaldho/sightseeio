@@ -1,7 +1,0 @@
-# Uncomment this line to define a global platform for your project
-# platform :osx, "10.8"
-
-target "Socket_client" do
-    pod "FastSocket", "~>1.2"
-end
-

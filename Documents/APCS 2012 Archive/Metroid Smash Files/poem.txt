@@ -1,3 +1,0 @@
-John	Smith	Sales	555-1234
-Mary	Jones	Wages	555-9876
-Paul	Harris	Accts	555-4321
