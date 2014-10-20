@@ -9,7 +9,7 @@ Generates automatic itinerary for a one day vacation given the location of the p
 
 ## How it works
 
-The user selects the city. Then the app (either Android or iOS) makes a request to a server which retrieves information about resteraunts, attractions, etc from Yelp. The server responds to the app's request with a JSON file containing the itinerary info. The app parses the JSON to provide a itinrary. The app can also sende notifications to the Pebble Watch (although this feature is not fully implemented).  
+The user selects the city. Then the app (either Android or iOS) makes a request to a server which retrieves information about resteraunts, attractions, etc from Yelp. The server responds to the app's request with a JSON file containing the itinerary info. The app parses the JSON to provide a itinerary. The app can also sende notifications to the Pebble Watch (although this feature is not fully implemented).  
 
 ## Android
 
