@@ -20,7 +20,8 @@ The user selects the city. Then the app (either Android or iOS) makes a request 
 
 ## iOS
 
-![Imgur](http://i.imgur.com/RsDDkPV.jpg)
+![Imgur](http://i.imgur.com/PccaWjc.jpg)
+![Imgur](http://i.imgur.com/pl5finI.jpg)
 
 ## Pebble
 
