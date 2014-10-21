@@ -62,8 +62,10 @@ public class HttpClientListActivity extends ListActivity {
 		protected PlaceToGo doInBackground(Void... params) {
 			Intent intent = getIntent();
 			String cityName = intent.getStringExtra("cityName");
+            String newCityName = cityName.replaceAll(" ", "%20");
+            Log.i("cityName", newCityName);
 			
-			HttpGet request = new HttpGet(BASE_URL+cityName);
+			HttpGet request = new HttpGet(BASE_URL+newCityName);
 			JSONResponseHandler responseHandler = new JSONResponseHandler();
 			try {
 				return mClient.execute(request, responseHandler);
@@ -111,7 +113,7 @@ public class HttpClientListActivity extends ListActivity {
 						.handleResponse(response);
 				try {
 
-					// Get top-level JSON Object - a Mapn
+					// Get top-level JSON Object - a Map
 					JSONObject responseObject = (JSONObject) new JSONTokener(JSONResponse).nextValue();
 
 					// Extract value of "earthquakes" key -- a List
@@ -150,16 +152,26 @@ public class HttpClientListActivity extends ListActivity {
 		
 		String bodyString = (String) result.placeDetails.get(listItemString);
 		String[] bodyStringArray = bodyString.split(",");
+        for(String s : bodyStringArray) {
+            Log.i("string", s);
+        }
+
 		
 		RatingBar rating = new RatingBar(HttpClientListActivity.this, null, android.R.attr.ratingBarStyle);
 		rating.setStepSize((float) 0.5);
 		rating.setNumStars(5);
-		rating.setRating(getRating(bodyStringArray[0]));		
+		rating.setRating(getRating(bodyStringArray[0]));
+
+        String address = "";
+
+        for(int i=1; i<bodyStringArray.length; i++) {
+            address += (" "+bodyStringArray[i]);
+        }
 		
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setView(rating, 100, 0, 100, 0);
         alertDialog.setTitle(listItemString);
-        alertDialog.setMessage(bodyStringArray[1]+bodyStringArray[2]);        
+        alertDialog.setMessage(address);
         alertDialog.show();
 	}
 	
