@@ -1,1 +1,27 @@
-////  ViewController.m//  sightsee////  Created by Ronald Ho on 2014-10-17.//  Copyright (c) 2014 Awesome Itinerary. All rights reserved.//#import "ViewController.h"#import "AppDelegate.h"@interface ViewController ()@property (nonatomic, strong) NSString *fieldValue;@end@implementation ViewController- (void)viewDidLoad {    [super viewDidLoad];    // Do any additional setup after loading the view, typically from a nib.            }- (void)didReceiveMemoryWarning {    [super didReceiveMemoryWarning];    // Dispose of any resources that can be recreated.}- (BOOL)textFieldShouldReturn:(UITextField *)cityQuery{    //alternate path to segue with kb//    [self performSegueWithIdentifier:@"displayDayPlan" sender:self];        [cityQuery resignFirstResponder];    return YES;}- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{    if ([[segue identifier] isEqualToString: @"displayDayPlan"]) {//        SearchResultsViewController *searchResultsViewController = [segue destinationViewController];//        searchResultsViewController.searchQuery = _searchQuery;                UINavigationController *navController = (UINavigationController *)segue.destinationViewController;        DayViewController *controller = (DayViewController *)navController.topViewController;        controller.city = _fieldValue;        //        DayViewController *destViewController = segue.destinationViewController;//        destViewController.city = _fieldValue;//        ViewController *ViewController = [segue destinationViewController];    }}/* alternate segue code to hook up with done button- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{    [self getLeJSON:_cityQuery.text];    [self.view endEditing:YES]; // This line solves the issue    if ([segue.identifier isEqualToString:@"displayDayPlan"]) {//        ViewController *ViewController = [segue destinationViewController];    }}*/-(IBAction)lets_go:(id)sender{    UITextField *textField = (UITextField*)[self.view viewWithTag:192];    _fieldValue = textField.text;//    NSString *fieldValue = _cityQuery.text;    NSLog(@"Field has value: %@", _fieldValue);//    [getLeJSON:fieldValue];}- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{    NSLog(@"touchesBegan:withEvent:");    [self.view endEditing:YES];    [super touchesBegan:touches withEvent:event];}@end
+//
+//  ViewController.m
+//  sightsee
+//
+//  Created by Ronald Ho on 2014-10-17.
+//  Copyright (c) 2014 Awesome Itinerary. All rights reserved.
+//
+
+#import "ViewController.h"
+
+@interface ViewController ()
+
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end
