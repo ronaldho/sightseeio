@@ -13,7 +13,7 @@ The user selects the city. Then the app (either Android or iOS) makes a request 
 
 ## Android
 
-[Download] (https://www.dropbox.com/sh/oidkoaefbvw2ee0/AABZRPK5dvn1Qz80yFsaRzFna?dl=1)
+[Download](https://www.dropbox.com/s/l3rssdl8f35e3j9/SightSeeIO%20%28Help%20Me%20I%27m%20Lazy%29.apk?dl=1)
 
 ![Imgur](http://i.imgur.com/0zCgm1Q.jpg) 
 ![Imgur](http://i.imgur.com/8zm2lpe.jpg)
